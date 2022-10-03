@@ -261,75 +261,39 @@
             iconSize: [40, 60],  
         });
 
+        // DRAW FOSAS UBICADAS (certain)
+
+        // var fosasUbicadasLayer = L.geoJson(fosasUbicadas, {
+        //     pointToLayer: function (feature, latlng) {
+        //         return L.marker(latlng, {
+        //             icon: redPinIcon
+        //         });
+        //     },
+
+        //     onEachFeature: function (feature, layer) {
+
+        //         layer.bindTooltip(`<h3> GRUPO ${layer.feature.properties.GRUPO}</h3>
+        //                              <p>${layer.feature.properties.LUGAR_NOMBRE}</p>
+        //     						<p>${layer.feature.properties.NOMBRE_VICTIMAS}</p>`);
 
 
-
-        // DRAW VDLC POINTS (certain)
-
-        var fosasUbicadasLayer = L.geoJson(fosasUbicadas, {
-            pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {
-                    icon: redPinIcon
-                });
-            },
-
-            onEachFeature: function (feature, layer) {
-
-                layer.bindTooltip(`<h3> GRUPO ${layer.feature.properties.GRUPO}</h3>
-                                     <p>${layer.feature.properties.LUGAR_NOMBRE}</p>
-            						<p>${layer.feature.properties.NOMBRE_VICTIMAS}</p>`);
-
-
-                layer.on('mouseover', function () {
-                    layer.setStyle({
-                        fillColor: 'red',
-                        fillColor: 1
-                    });
-                });
-                layer.on('mouseout', function () {
-                    layer.setStyle({
-                        fillColor: 'red',
-                        fillOpacity: .7
-                    });
-                });
-            }
-        }).addTo(map);
-
-
-        //   var fosasUbicadasLayer = L.geoJson(fosasUbicadas, {
-        //         pointToLayer: function (feature, latlng) {
-        //             return L.circleMarker(latlng, {
-        //                 color: 'red',
-        //                 weight: 1,
-        //                 radius: 10,
+        //         layer.on('mouseover', function () {
+        //             layer.setStyle({
+        //                 fillColor: 'red',
+        //                 fillColor: 1
+        //             });
+        //         });
+        //         layer.on('mouseout', function () {
+        //             layer.setStyle({
         //                 fillColor: 'red',
         //                 fillOpacity: .7
-
         //             });
-        //         },
-        //         onEachFeature: function (feature, layer) {
-
-        //             layer.bindTooltip(`<h3> GRUPO ${layer.feature.properties.GRUPO}</h3>
-        //                                  <p>${layer.feature.properties.LUGAR_NOMBRE}</p>
-        // 								<p>${layer.feature.properties.NOMBRE_VICTIMAS}</p>`);
+        //         });
+        //     }
+        // }).addTo(map);
 
 
-        //             layer.on('mouseover', function () {
-        //                 layer.setStyle({
-        //                     fillColor: 'red',
-        //                     fillColor: 1
-        //                 });
-        //             });
-        //             layer.on('mouseout', function () {
-        //                 layer.setStyle({
-        //                     fillColor: 'red',
-        //                     fillOpacity: .7
-        //                 });
-        //             });
-        //         }
-        //     }).addTo(map);
-
-
+    
         //DRAW MJUSTICIA POINTS - SIZE ACCORDING TO # OF VICTIMS 
 
         mjusticia.features.sort(function (a, b) {
@@ -381,6 +345,40 @@
             }
         }).addTo(map);
 
+        // DRAW FOSAS UBICADAS (certain)
+
+        var fosasUbicadasLayer = L.geoJson(fosasUbicadas, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        color: 'black',
+                        weight: 1,
+                        radius: 6,
+                        fillColor: 'black',
+                        fillOpacity: 1
+
+                    });
+                },
+                onEachFeature: function (feature, layer) {
+
+                    layer.bindTooltip(`<h3> OID GRUPO ${layer.feature.properties.GRUPO}</h3>
+                                         <p>${layer.feature.properties.LUGAR_NOMBRE}</p>
+        								<p>${layer.feature.properties.NOMBRE_VICTIMAS}</p>`);
+
+
+                    layer.on('mouseover', function () {
+                        layer.setStyle({
+                            fillColor: 'red',
+                            fillColor: .3
+                        });
+                    });
+                    layer.on('mouseout', function () {
+                        layer.setStyle({
+                            fillColor: 'black',
+                            fillOpacity: 1
+                        });
+                    });
+                }
+            }).addTo(map);
 
         // // DRAW VDLC POINTS (certain)
 
