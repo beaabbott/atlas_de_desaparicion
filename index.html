@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Atlas de Desaparición</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!--<link rel='icon' href='https://newmapsplus.github.io/favicon.ico' type='image/x-icon' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Add Leaflet CSS library. Check to make sure it is latest version. -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Add Leaflet plugin CSS after Leaflet library. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.2/dist/L.Control.Locate.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 100%;
+            color: #3d3d3d;
+        }
+
+        h1 {
+            position: absolute;
+            margin-top: 0;
+            margin-bottom: 0;
+            top: 20px;
+            left: 30px;
+            font-size: 18px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            letter-spacing: .04em;
+            padding: 10px 10px;
+            /* Add styles to match Leaflet UI elements */
+            background: rgba(256, 256, 256, .8);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            border: 3px solid blue;
+            border-radius: 5px;
+            z-index: 800;
+        }
+
+        h2 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.4em;
+            letter-spacing: .04em;
+
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* #about {
+            position: absolute;
+            bottom: 20px;
+            font-size: 15px;
+            font-weight: 500;
+            left: 30px;
+            width: 400px;
+            padding: 0 25px; */
+        /* Add styles to match Leaflet UI elements */
+        /* background: rgba(256, 256, 256, .9);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            border: 3px solid orange;
+            border-radius: 5px;
+            z-index: 800;
+        } */
+
+        #toggle {
+            position: absolute;
+            top: 15px;
+            right: 55px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            border: 1px solid orangered;
+            border-radius: 3px;
+            z-index: 800;
+            font-size: 12px;
+        }
+
+        #toggle:hover {
+            background: rgb(255, 226, 2);
+            cursor: pointer;
+        }
+
+        #toggle:active {
+            background: rgb(254, 193, 60);
+            cursor: pointer;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        p {
+            font-size: .9em;
+            line-height: 1.5em;
+        }
+
+        a {
+            color: #005daa;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Leaflet popup styles */
+        .leaflet-popup-content {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.5em;
+        }
+
+        .leaflet-tooltip {
+            /* display: inline; */
+            position: right;
+            width: auto;
+            font-size: 14px;
+            font-family: 'Quicksand', sans-serif;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 2px;
+            /*color: #222;*/
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            /* width: 220px;
+            max-width: 220px; */
+        }
+
+        .tooltip-content-wrapper {
+            position: absolute;
+            width: 220px;
+            /* THIS is your max-width for tooltip */
+            visibility: hidden;
+        }
+
+        .tooltip:hover .tooltip-content-wrapper {
+            visibility: visible;
+        }
+
+        .tooltip-content {
+            display: inline-block;
+        }
+
+
+        /* 
+		When browser is 900px high or less
+		make the font a little smaller.
+		 */
+        @media screen and (max-height: 400px) {
+
+            #about p,
+            #about h2 {
+                font-size: .6em;
+            }
+
+            h1 {
+                font-size: 2.9em;
+            }
+
+            #about h2 {
+                font-size: 1em;
+            }
+
+            .leaflet-popup-content {
+                font-family: 'Quicksand', sans-serif;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Don't display info block when window is very small */
+        @media screen and (max-height: 200px) {
+
+            #about {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 class="show" id="title"><b>Atlas de Desaparición</b>
+        <p> OID - mapa para uso interno</p>
+
+    </h1>
+
+    <div id='map'></div>
+
+    <!-- <button id="toggle">Reset</button>
+
+    <section id="about" class="show">
+        <h2>toggle title</h2>
+        -->
+    </section>
+    <!-- Add Leaflet JS library. Check to make sure it is latest version. -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Load a Leaflet plugin to provide geolocation. Load this after Leaflet JS.-->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.72.2/src/L.Control.Locate.min.js"></script>
+    <script src="mjusticia_VDLC_v1.js"></script>
+    <script src="fosas_ubicadas_v4.js"></script>
+  
+
+    <script>
+        var options = {
+            center: [40.174931, -4.0447787],
+            zoom: 7,
+            zoomControl: false
+        }
+        //console.log(routeData)
+
+        var locate_options = {
+            position: 'topright',
+            strings: {
+                title: "Show me where I am!"
+            }
+        }
+
+        var map = L.map('map', options);
+
+        // add zoom control to top right window position
+        L.control.zoom({
+            position: 'topright'
+        }).addTo(map);
+
+        // add geolocation control to top right window position (Leaflet can handle multiple top-right elements)
+        L.control.locate(locate_options).addTo(map);
+
+        // Get basemap URL from Leaflet Providers
+        var basemap_url = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
+
+        // Get basemap attributes from Leaflet Providers
+        var basemap_attributes = {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+            subdomains: 'abcd',
+            maxZoom: 22
+        };
+        // requests some map tiles
+        var tiles = L.tileLayer(basemap_url, basemap_attributes);
+        map.addLayer(tiles);
+
+        var mjusticiaData = mjusticia
+        var fosasUbicadas = fosasUbicadas_v4
+
+
+        var redPinIcon = L.icon({
+            iconUrl: '/Users/beaabbott/Desktop/VALLE_CALLIDOS/VDLC_code_test/atlas_de_desaparicion/images/icons8-map-pin-30.png',
+            iconSize: [40, 60],  
+        });
+
+
+
+
+        // DRAW VDLC POINTS (certain)
+
+        var fosasUbicadasLayer = L.geoJson(fosasUbicadas, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {
+                    icon: redPinIcon
+                });
+            },
+
+            onEachFeature: function (feature, layer) {
+
+                layer.bindTooltip(`<h3> GRUPO ${layer.feature.properties.GRUPO}</h3>
+                                     <p>${layer.feature.properties.LUGAR_NOMBRE}</p>
+            						<p>${layer.feature.properties.NOMBRE_VICTIMAS}</p>`);
+
+
+                layer.on('mouseover', function () {
+                    layer.setStyle({
+                        fillColor: 'red',
+                        fillColor: 1
+                    });
+                });
+                layer.on('mouseout', function () {
+                    layer.setStyle({
+                        fillColor: 'red',
+                        fillOpacity: .7
+                    });
+                });
+            }
+        }).addTo(map);
+
+
+        //   var fosasUbicadasLayer = L.geoJson(fosasUbicadas, {
+        //         pointToLayer: function (feature, latlng) {
+        //             return L.circleMarker(latlng, {
+        //                 color: 'red',
+        //                 weight: 1,
+        //                 radius: 10,
+        //                 fillColor: 'red',
+        //                 fillOpacity: .7
+
+        //             });
+        //         },
+        //         onEachFeature: function (feature, layer) {
+
+        //             layer.bindTooltip(`<h3> GRUPO ${layer.feature.properties.GRUPO}</h3>
+        //                                  <p>${layer.feature.properties.LUGAR_NOMBRE}</p>
+        // 								<p>${layer.feature.properties.NOMBRE_VICTIMAS}</p>`);
+
+
+        //             layer.on('mouseover', function () {
+        //                 layer.setStyle({
+        //                     fillColor: 'red',
+        //                     fillColor: 1
+        //                 });
+        //             });
+        //             layer.on('mouseout', function () {
+        //                 layer.setStyle({
+        //                     fillColor: 'red',
+        //                     fillOpacity: .7
+        //                 });
+        //             });
+        //         }
+        //     }).addTo(map);
+
+
+        //DRAW MJUSTICIA POINTS - SIZE ACCORDING TO # OF VICTIMS 
+
+        mjusticia.features.sort(function (a, b) {
+            return b.properties.numero_de_victimas - a.properties.numero_de_victimas;
+        });
+
+        var mJusticiaLayer = L.geoJson(mjusticiaData, {
+            // COLOR MJUSTICIA POINTS DIFFERENTLY IF THEY ARE INCLUDED IN INVESTIGATION 
+            pointToLayer: function (feature, latlng) {
+                let prop = feature.properties
+                let isAtlas = prop.incluida_en_AtlasDeDes
+                if (isAtlas) {
+                    return L.circleMarker(latlng, {
+                        color: 'red',
+                        weight: 2.5,
+                        fillColor: 'yellow',
+                        fillOpacity: .3,
+                        //dashArray: "3, 3",
+                        radius: getRadius(feature.properties.numero_de_victimas)
+                    });
+
+                } else {
+                    return L.circleMarker(latlng, {
+                        color: 'orange',
+                        weight: 2,
+                        fillColor: 'yellow',
+                        fillOpacity: .3,
+                        //dashArray: "3, 3",
+                        radius: getRadius(feature.properties.numero_de_victimas)
+                    });
+                }
+            },
+            // ADD TOOL TIP MOUSEOVER TO SEE INFO ON # of VICTIMS, LOCATION, FOSA CODE 
+            onEachFeature: function (feature, layer) {
+                layer.bindTooltip(`<h3>${layer.feature.properties.codigo}</h3>
+									<p>Numero de Victimas traslados a VDLC: ${layer.feature.properties.numero_de_victimas}</p>`);
+
+
+                layer.on('mouseover', function () {
+                    layer.setStyle({
+                        fillColor: 'orange'
+                    });
+                });
+                layer.on('mouseout', function () {
+                    layer.setStyle({
+                        fillColor: 'yellow'
+                    });
+                });
+            }
+        }).addTo(map);
+
+
+        // // DRAW VDLC POINTS (certain)
+
+        // var fosasUbicadasLayer = L.geoJson(fosasUbicadas, {
+        //     pointToLayer: function (feature, latlng) {
+        //         return L.circleMarker(latlng, {
+        //             color: 'red',
+        //             weight: 1,
+        //             radius: 10,
+        //             fillColor: 'red',
+        //             fillOpacity: .7
+
+        //         });
+        //     },
+        //     onEachFeature: function (feature, layer) {
+
+        //         layer.bindTooltip(`<h3> GRUPO ${layer.feature.properties.GRUPO}</h3>
+        //                              <p>${layer.feature.properties.LUGAR_NOMBRE}</p>
+        // 							<p>${layer.feature.properties.NOMBRE_VICTIMAS}</p>`);
+
+
+        //         layer.on('mouseover', function () {
+        //             layer.setStyle({
+        //                 fillColor: 'red',
+        //                 fillColor: 1
+        //             });
+        //         });
+        //         layer.on('mouseout', function () {
+        //             layer.setStyle({
+        //                 fillColor: 'red',
+        //                 fillOpacity: .7
+        //             });
+        //         });
+        //     }
+        // }).addTo(map);
+
+
+
+
+        // layer.bindTooltip(
+        //     feature.properties.name, {
+        //         permanent: true,
+        //         direction: 'center',
+        //         className: 'countryLabel'
+        //     }
+        // );
+
+
+        //  DRAW VDLC POINTS (uncertain)
+
+
+        //  ADD TOOL TIP W. NAMES
+
+
+
+        // ADD MENU TO SELECT AND DE SELECT LAYERS... 
+
+        var sourcesLayers = {
+            "Trasladados a VDLC (por tamaño de fosa). Las rojas están incluidos en investigación de OID": mJusticiaLayer,
+            "OID - Fosas Ubicadas": fosasUbicadasLayer
+        }
+
+        L.control.layers(null, sourcesLayers, {
+            collapsed: false
+        }).addTo(map);
+
+
+
+        // FUNCTION FOR GET RADIUS 
+
+        function getRadius(area) {
+            var radius = Math.sqrt(area / Math.PI);
+            return radius * 1.5;
+        }
+    </script>
+
+</body>
+
+</html>
