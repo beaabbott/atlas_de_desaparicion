@@ -37,7 +37,7 @@
             /* Add styles to match Leaflet UI elements */
             background: rgba(256, 256, 256, .8);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-            border: 3px solid blue;
+            border: 2px solid blue;
             border-radius: 5px;
             z-index: 800;
         }
@@ -194,9 +194,8 @@
 <body>
 
     <h1 class="show" id="title"><b>Atlas de Desaparición</b>
-        <p>Oficina de Investigación Documental (OID)</p> 
+        <p>Oficina de Investigación Documental</p> 
         <p>mapa para uso interno</p> 
-
     </h1>
 
     <div id='map'></div>
@@ -438,8 +437,8 @@
         // ADD MENU TO SELECT AND DE SELECT LAYERS... 
 
         var sourcesLayers = {
-            "Trasladados a VDLC (por tamaño de fosa) <br>    Las rojas están incluidas en la investigación de OID <br>" : mJusticiaLayer,
-            "OID - Fosas Ubicadas (Al 5 de oct, 2022)": fosasUbicadasLayer
+            "Trasladados a VDLC (por tamaño de fosa) <br> Las rojas están incluidas en la investigación de OID<br>" : mJusticiaLayer,
+            "<br>OID - Fosas Ubicadas (Al 5 de oct, 2022)": fosasUbicadasLayer
         }
 
         L.control.layers(null, sourcesLayers, {
