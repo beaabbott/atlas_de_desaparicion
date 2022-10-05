@@ -195,7 +195,7 @@
 
     <h1 class="show" id="title"><b>Atlas de Desaparición</b>
         <p>Oficina de Investigación Documental</p> 
-        <p>mapa para uso interno 
+        <p>mapa de uso interno 
     </h1>
 
     <div id='map'></div>
@@ -352,7 +352,7 @@
                     return L.circleMarker(latlng, {
                         color: 'black',
                         weight: 1,
-                        radius: 3,
+                        radius: 3.5,
                         fillColor: 'black',
                         fillOpacity: 1
 
@@ -437,7 +437,7 @@
         // ADD MENU TO SELECT AND DE SELECT LAYERS... 
 
         var sourcesLayers = {
-            "Trasladados a VDLC (por tamaño de fosa) <br> Las rojas están incluidas en la investigación de OID<br>" : mJusticiaLayer,
+            "Trasladados a VDLC (por tamaño de fosa) <br> Las rojas están incluidas en la investigación de OID<br>": mJusticiaLayer,
             "OID - Fosas Ubicadas (Al 5 de oct, 2022)": fosasUbicadasLayer
         }
 
@@ -451,7 +451,7 @@
 
         function getRadius(area) {
             var radius = Math.sqrt(area / Math.PI);
-            return radius * .9;
+            return radius * .97;
         }
     </script>
 
