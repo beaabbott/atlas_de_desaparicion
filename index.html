@@ -29,7 +29,7 @@
             margin-bottom: 0;
             top: 20px;
             left: 30px;
-            font-size: 12px;
+            font-size: 8px;
             font-family: 'Quicksand', sans-serif;
             font-weight: 500;
             letter-spacing: .04em;
@@ -352,7 +352,7 @@
                     return L.circleMarker(latlng, {
                         color: 'black',
                         weight: 1,
-                        radius: 4,
+                        radius: 2,
                         fillColor: 'black',
                         fillOpacity: 1
 
@@ -451,7 +451,7 @@
 
         function getRadius(area) {
             var radius = Math.sqrt(area / Math.PI);
-            return radius * 1.2;
+            return radius * .9;
         }
     </script>
 
